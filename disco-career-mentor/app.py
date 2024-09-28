@@ -37,6 +37,24 @@ def get_jobs(job_role):
         return jsonify({"error": "Failed to retrieve data", "details": response.text}), response.status_code
 
 # Define a home route
+@app.route('/joke', methods=['GET'])
+def get_joke():
+    # Define the URL for the JokeAPI
+    url = "https://v2.jokeapi.dev/joke/Any"
+    
+    # Get a joke from the JokeAPI
+    response = requests.get(url)
+
+    print("Joke Status Code:", response.status_code)
+    print("Joke Response Text:", response.text)
+
+    if response.status_code == 200:
+        data = response.json()
+        return jsonify(data)
+    else:
+        return jsonify({"error": "Failed to retrieve joke", "details": response.text}), response.status_code
+
+
 @app.route('/')
 def home():
     return jsonify(message="Welcome to Disco Career Mentor!")
